@@ -10,7 +10,6 @@ import javax.validation.constraints.PastOrPresent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,12 +28,12 @@ import ru.practicum.ewm.server.stats.service.StatService;
 @Validated
 public class StatController {
     private final StatService statService;
-    private final String string="application/json";
+    private final String string = "application/json";
 
     @PostMapping("/hit")
-    public ResponseEntity<Object> saveStats(@RequestBody @Valid StatRequestDto statRequestDto) {
+    public void saveStats(@RequestBody @Valid StatRequestDto statRequestDto) {
         log.info("post запрос на сохранение статистики");
-        return statService.saveStats(statRequestDto);
+        statService.saveStats(statRequestDto);
     }
 
     @GetMapping("/stats")

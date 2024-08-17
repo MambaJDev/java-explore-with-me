@@ -28,8 +28,8 @@ public class StatsClient {
                 .build();
     }
 
-    public ResponseEntity<Object> sendHttpRequest(StatRequestDto statRequestDto) {
-        return makeAndSendRequest(HttpMethod.POST, "/hit", null, statRequestDto);
+    public void sendHttpRequest(StatRequestDto statRequestDto) {
+         makeAndSendRequest(HttpMethod.POST, "/hit", null, statRequestDto);
     }
 
     public ResponseEntity<Object> getStats(LocalDateTime start, LocalDateTime end, @Nullable String[] uris, @Nullable Boolean unique) {

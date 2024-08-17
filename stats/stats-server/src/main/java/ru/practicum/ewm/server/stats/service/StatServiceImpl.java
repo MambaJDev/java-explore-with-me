@@ -1,13 +1,10 @@
 package ru.practicum.ewm.server.stats.service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ru.practicum.ewm.dto.stats.StatRequestDto;
 import ru.practicum.ewm.dto.stats.StatResponseDto;
@@ -22,10 +19,9 @@ public class StatServiceImpl implements StatService {
     private final StatRepository statRepository;
 
     @Override
-    public ResponseEntity<Object> saveStats(StatRequestDto statRequestDto) {
+    public void saveStats(StatRequestDto statRequestDto) {
         EndpointHit endpointHitData = statMapper.statRequestDtoToEndpointHitData(statRequestDto);
         statRepository.save(endpointHitData);
-        return ResponseEntity.status(HttpStatus.OK).body("Saved successful");
     }
 
     @Override

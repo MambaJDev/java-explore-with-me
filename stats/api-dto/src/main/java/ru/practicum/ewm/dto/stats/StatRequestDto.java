@@ -2,8 +2,8 @@ package ru.practicum.ewm.dto.stats;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
-import javax.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
@@ -11,13 +11,13 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class StatRequestDto {
-    @NotNull
+    @NonNull
     private String app;
-    @NotNull
+    @NonNull
     private String uri;
-    @NotNull
+    @NonNull
     private String ip;
-    @NotNull
+    @NonNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime created;
 }

@@ -3,6 +3,7 @@ package ru.practicum.ewm.client.stats;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,11 +20,11 @@ import ru.practicum.ewm.dto.stats.StatRequestDto;
 
 @Service
 public class StatsClient {
-    protected final RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-    public StatsClient(RestTemplateBuilder builder) {
+    public StatsClient(@Value("${stats-server.url}") String statsServerUrl, RestTemplateBuilder builder) {
         restTemplate = builder
-                .uriTemplateHandler(new DefaultUriBuilderFactory("http://localhost:9090"))
+                .uriTemplateHandler(new DefaultUriBuilderFactory(statsServerUrl))
                 .requestFactory(() -> new HttpComponentsClientHttpRequestFactory())
                 .build();
     }

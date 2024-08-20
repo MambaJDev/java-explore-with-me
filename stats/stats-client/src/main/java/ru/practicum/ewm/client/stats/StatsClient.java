@@ -24,12 +24,12 @@ public class StatsClient {
     public StatsClient(RestTemplateBuilder builder) {
         restTemplate = builder
                 .uriTemplateHandler(new DefaultUriBuilderFactory("http://localhost:9090"))
-                .requestFactory(HttpComponentsClientHttpRequestFactory::new)
+                .requestFactory(() -> new HttpComponentsClientHttpRequestFactory())
                 .build();
     }
 
     public void sendHttpRequest(StatRequestDto statRequestDto) {
-         makeAndSendRequest(HttpMethod.POST, "/hit", null, statRequestDto);
+        makeAndSendRequest(HttpMethod.POST, "/hit", null, statRequestDto);
     }
 
     public ResponseEntity<Object> getStats(LocalDateTime start, LocalDateTime end, @Nullable String[] uris, @Nullable Boolean unique) {

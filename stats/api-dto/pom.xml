@@ -8,7 +8,7 @@
     </parent>
 
     <artifactId>api-dto</artifactId>
-    <packaging>jar</packaging>
+    <version>0.0.1-SNAPSHOT</version>
 
     <properties>
         <java.version>21</java.version>

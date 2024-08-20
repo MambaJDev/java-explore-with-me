@@ -10,10 +10,11 @@
     </parent>
 
     <artifactId>stats-client</artifactId>
-    <packaging>jar</packaging>
+    <version>0.0.1-SNAPSHOT</version>
 
     <properties>
         <java.version>21</java.version>
+        <project.version>0.0.1-SNAPSHOT</project.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 

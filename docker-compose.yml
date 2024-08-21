@@ -1,4 +1,4 @@
-
+version: '3.8'
 services:
   stats-server:
     build: stats/stats-server
@@ -20,9 +20,9 @@ services:
     ports:
       - "5433:5432"
     environment:
-    - POSTGRES_DB=stats
-    - POSTGRES_USER=user
-    - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=stats
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
 
   ewm-service:
     build: ewm-service
@@ -31,8 +31,10 @@ services:
     ports:
       - "8080:8080"
     depends_on:
+      - stats-server
       - ewm-db
     environment:
+      - STATS_SERVER_URL=http://stat-server:9090
       - SPRING_DRIVER_CLASS_NAME=org.postgresql.Driver
       - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewm
       - SPRING_DATASOURCE_USERNAME=user

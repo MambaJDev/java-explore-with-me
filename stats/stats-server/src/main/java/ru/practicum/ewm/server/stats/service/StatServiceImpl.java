@@ -27,7 +27,7 @@ public class StatServiceImpl implements StatService {
     @Override
     public List<StatResponseDto> getStats(LocalDateTime start, LocalDateTime end, Set<String> uris, Boolean unique) {
         List<ShortEndpointHit> shortEndpointHitList;
-        if (uris.isEmpty() || uris == null) {
+        if (uris.isEmpty()) {
             shortEndpointHitList = statRepository.getAllStats(start, end);
         } else {
             shortEndpointHitList = statRepository.getAllStatsFromIpSet(uris, start, end);

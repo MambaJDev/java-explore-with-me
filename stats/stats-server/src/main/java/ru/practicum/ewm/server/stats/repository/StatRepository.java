@@ -21,14 +21,14 @@ public interface StatRepository extends JpaRepository<EndpointHit, Long> {
                                        LocalDateTime end
     );
 
-    Integer countByAppAndUriAndCreatedBetween(String app,
+    Integer countByAppAndUriAndCreateBetween(String app,
                                                       String uri,
                                                       LocalDateTime start,
                                                       LocalDateTime end);
 
     @Query(value = "select count(distinct ip) from endpoint_hits where app =? and uri=? and create_date  between ? and ?",
             nativeQuery = true)
-    Integer countByAppAndUriAndCreatedBetweenWhenIpIsUnique(String app,
+    Integer countByAppAndUriAndTimestampBetweenWhenIpIsUnique(String app,
                                                         String uri,
                                                         LocalDateTime start,
                                                         LocalDateTime end);

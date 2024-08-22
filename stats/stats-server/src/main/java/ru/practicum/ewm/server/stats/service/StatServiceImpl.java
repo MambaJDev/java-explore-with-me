@@ -35,7 +35,7 @@ public class StatServiceImpl implements StatService {
         if (unique) {
             return shortEndpointHitList.stream()
                     .map(shortEndpointHit -> statMapper.shortEndpointHitToStatResponseDto(
-                                    shortEndpointHit, statRepository.countByAppAndUriAndCreatedBetweenWhenIpIsUnique(
+                                    shortEndpointHit, statRepository.countByAppAndUriAndTimestampBetweenWhenIpIsUnique(
                                             shortEndpointHit.getApp(), shortEndpointHit.getUri(), start, end
                                     )
                             )
@@ -44,7 +44,7 @@ public class StatServiceImpl implements StatService {
         } else {
             return shortEndpointHitList.stream()
                     .map(shortEndpointHit -> statMapper.shortEndpointHitToStatResponseDto(
-                                    shortEndpointHit, statRepository.countByAppAndUriAndCreatedBetween(
+                                    shortEndpointHit, statRepository.countByAppAndUriAndCreateBetween(
                                             shortEndpointHit.getApp(), shortEndpointHit.getUri(), start, end
                                     )
                             )

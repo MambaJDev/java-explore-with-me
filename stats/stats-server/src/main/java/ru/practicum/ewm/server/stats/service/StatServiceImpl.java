@@ -1,6 +1,7 @@
 package ru.practicum.ewm.server.stats.service;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -27,7 +28,7 @@ public class StatServiceImpl implements StatService {
     @Override
     public List<StatResponseDto> getStats(LocalDateTime start, LocalDateTime end, Set<String> uris, Boolean unique) {
         List<ShortEndpointHit> shortEndpointHitList;
-        if (uris.isEmpty()) {
+        if (uris == null) {
             shortEndpointHitList = statRepository.getAllStats(start, end);
         } else {
             shortEndpointHitList = statRepository.getAllStatsFromIpSet(uris, start, end);
@@ -40,15 +41,17 @@ public class StatServiceImpl implements StatService {
                                     )
                             )
                     )
+                    .sorted(Comparator.comparingInt(StatResponseDto::getHits).reversed())
                     .collect(Collectors.toList());
         } else {
             return shortEndpointHitList.stream()
                     .map(shortEndpointHit -> statMapper.shortEndpointHitToStatResponseDto(
-                                    shortEndpointHit, statRepository.countByAppAndUriAndCreateBetween(
+                                    shortEndpointHit, statRepository.countByAppAndUriAndTimestampBetween(
                                             shortEndpointHit.getApp(), shortEndpointHit.getUri(), start, end
                                     )
                             )
                     )
+                    .sorted(Comparator.comparingInt(StatResponseDto::getHits).reversed())
                     .collect(Collectors.toList());
         }
     }

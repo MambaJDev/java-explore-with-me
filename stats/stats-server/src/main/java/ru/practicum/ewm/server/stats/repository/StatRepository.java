@@ -21,7 +21,7 @@ public interface StatRepository extends JpaRepository<EndpointHit, Long> {
                                        LocalDateTime end
     );
 
-    Integer countByAppAndUriAndCreateBetween(String app,
+    Integer countByAppAndUriAndTimestampBetween(String app,
                                                       String uri,
                                                       LocalDateTime start,
                                                       LocalDateTime end);

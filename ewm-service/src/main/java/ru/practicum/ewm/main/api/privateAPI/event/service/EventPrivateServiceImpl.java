@@ -143,8 +143,8 @@ public class EventPrivateServiceImpl implements EventPrivateService {
             if (event.getParticipantLimit().equals(event.getConfirmedRequests())) {
                 throw new FullLimitException(String.format(Constants.LIMIT_IS_OVER, eventId));
             }
-            participationRequestRequestList = participationRequestRequestList.stream().
-                    map(participation -> {
+            participationRequestRequestList = participationRequestRequestList.stream()
+                    .map(participation -> {
                         if (!event.getParticipantLimit().equals(event.getConfirmedRequests())) {
                             participation.setRequestStatus(RequestStatus.CONFIRMED);
                             event.setConfirmedRequests(event.getConfirmedRequests() + ONE_REQUEST);

@@ -52,7 +52,7 @@ public class ErrorHandler {
 
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiError NotFoundHandle(final NotFoundException exception) {
+    public ApiError notFoundHandle(final NotFoundException exception) {
         log.error("404 {}", exception.getMessage(), exception);
         return new ApiError()
                 .setStatus(HttpStatus.NOT_FOUND)
@@ -63,7 +63,7 @@ public class ErrorHandler {
 
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiError BadRequestHandle(final BadRequestException exception) {
+    public ApiError badRequestHandle(final BadRequestException exception) {
         log.error("400 {}", exception.getMessage(), exception);
         return new ApiError()
                 .setStatus(HttpStatus.BAD_REQUEST)
@@ -74,7 +74,7 @@ public class ErrorHandler {
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiError MissingServletRequestParameterHandle(final MissingServletRequestParameterException exception) {
+    public ApiError missingServletRequestParameterHandle(final MissingServletRequestParameterException exception) {
         log.error("400 {}", exception.getMessage(), exception);
         return new ApiError()
                 .setStatus(HttpStatus.BAD_REQUEST)
@@ -118,7 +118,7 @@ public class ErrorHandler {
 
     @ExceptionHandler(DataIntegrityViolationException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ApiError DataIntegrityViolationHandle(final DataIntegrityViolationException exception) {
+    public ApiError dataIntegrityViolationHandle(final DataIntegrityViolationException exception) {
         log.error("409 {}", exception.getMessage(), exception);
         return new ApiError()
                 .setStatus(HttpStatus.CONFLICT)
@@ -140,7 +140,7 @@ public class ErrorHandler {
 
     @ExceptionHandler(Throwable.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiError MainExceptionHandle(Throwable throwable) {
+    public ApiError mainExceptionHandle(Throwable throwable) {
         log.error("500 {}", throwable.getMessage(), throwable);
         return new ApiError()
                 .setStatus(HttpStatus.INTERNAL_SERVER_ERROR)

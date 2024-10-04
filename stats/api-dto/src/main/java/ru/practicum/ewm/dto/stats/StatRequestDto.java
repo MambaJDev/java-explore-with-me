@@ -18,6 +18,5 @@ public class StatRequestDto {
     @NonNull
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime timestamp;
-    @NonNull
     private String uri;
 }

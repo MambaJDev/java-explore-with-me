@@ -3,7 +3,6 @@ package ru.practicum.ewm.server.stats.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
@@ -28,10 +27,12 @@ import ru.practicum.ewm.server.stats.service.StatService;
 @Validated
 public class StatController {
     private final StatService statService;
-    private final String string = "application/json";
 
     @PostMapping("/hit")
     public void saveStats(@RequestBody @Valid StatRequestDto statRequestDto) {
+        if (statRequestDto.getUri() == null) {
+            statRequestDto.setUri("0");
+        }
         log.info("post запрос на сохранение статистики");
         statService.saveStats(statRequestDto);
     }
@@ -41,7 +42,7 @@ public class StatController {
                                           @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
                                           @RequestParam @PastOrPresent @NotNull
                                           @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
-                                          @RequestParam(required = false) Set<String> uris,
+                                          @RequestParam(required = false, defaultValue = "0") String[] uris,
                                           @RequestParam(required = false, defaultValue = "false") Boolean unique) {
         if (end.isBefore(start)) {
             log.error("Время бронирования некорректно");

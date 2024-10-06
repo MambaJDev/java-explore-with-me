@@ -38,7 +38,8 @@ public class Validation {
 
     public User checkUserExist(Long userId, UserRepository userRepository) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new NotFoundException(Constants.USER_NOT_FOUND));
+                .orElseThrow(() -> new NotFoundException(
+                        String.format(Constants.USER_NOT_FOUND, userId)));
     }
 
     public Event checkEventExist(Long eventId, EventRepository eventRepository) {

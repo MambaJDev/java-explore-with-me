@@ -33,6 +33,7 @@ created_on TIMESTAMP WITHOUT TIME ZONE,
 published_date TIMESTAMP WITHOUT TIME ZONE,
 confirmed_requests BIGINT,
 event_state VARCHAR,
+views INT DEFAULT 0,
 CONSTRAINT events_to_categories FOREIGN KEY(category_id) REFERENCES categories(id) ON DELETE CASCADE,
 CONSTRAINT events_to_locations FOREIGN KEY(location_id) REFERENCES locations(id) ON DELETE CASCADE,
 CONSTRAINT events_to_users FOREIGN KEY(initiator_id) REFERENCES users(id) ON DELETE CASCADE

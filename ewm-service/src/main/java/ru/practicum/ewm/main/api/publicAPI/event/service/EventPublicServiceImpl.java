@@ -43,6 +43,7 @@ public class EventPublicServiceImpl implements EventPublicService {
                                                Integer size,
                                                HttpServletRequest servletRequest) {
         validation.validateDates(rangeStart, rangeEnd);
+        statManager.sendHitEventData(servletRequest);
         LocalDateTime start = rangeStart != null ? rangeStart : LocalDateTime.now();
         LocalDateTime end = rangeEnd != null ? rangeEnd : LocalDateTime.now().plusYears(10);
         Pageable page = PageRequest.of(from / size, size);
@@ -63,7 +64,6 @@ public class EventPublicServiceImpl implements EventPublicService {
                 events.sort(Comparator.comparing(Event::getViews));
             }
         }
-        statManager.sendHitEventData(servletRequest);
         return events.stream()
                 .map(eventMapper::toEventShortDto)
                 .toList();

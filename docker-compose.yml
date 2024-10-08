@@ -18,7 +18,7 @@ services:
     image: postgres:16.1
     container_name: stats-db-container
     ports:
-      - "5433:5432"
+      - "5430:5432"
     environment:
       - POSTGRES_DB=stats
       - POSTGRES_USER=user
@@ -34,7 +34,7 @@ services:
       - stats-server
       - ewm-db
     environment:
-      - STATS_SERVER_URL=http://stat-server:9090
+      - STATS_SERVER_URL=http://stats-server:9090
       - SPRING_DRIVER_CLASS_NAME=org.postgresql.Driver
       - SPRING_DATASOURCE_URL=jdbc:postgresql://ewm-db:5432/ewm
       - SPRING_DATASOURCE_USERNAME=user

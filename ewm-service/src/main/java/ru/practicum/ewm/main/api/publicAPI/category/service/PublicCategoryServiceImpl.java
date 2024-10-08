@@ -29,7 +29,6 @@ public class PublicCategoryServiceImpl implements PublicCategoryService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public CategoryDto getCategoryById(Long catId) {
         Category category = validation.checkCategoryExist(catId, categoryRepository);
         return categoryMapper.categoryToCategoryDto(category);

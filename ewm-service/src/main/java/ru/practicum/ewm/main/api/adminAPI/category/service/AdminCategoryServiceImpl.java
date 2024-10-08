@@ -2,7 +2,6 @@ package ru.practicum.ewm.main.api.adminAPI.category.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.main.api.errorAPI.NotEmptyCategoryException;
 import ru.practicum.ewm.main.data.constants.Constants;
 import ru.practicum.ewm.main.data.dto.category.CategoryDto;
@@ -29,7 +28,6 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
     }
 
     @Override
-    @Transactional
     public void delete(Long catId) {
         Category category = validation.checkCategoryExist(catId,categoryRepository);
         if (eventRepository.findALLByEventCategory(category).isEmpty()) {

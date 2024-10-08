@@ -1,7 +1,8 @@
 package ru.practicum.ewm.main.api.adminAPI.category.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service; import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.main.api.errorAPI.NotEmptyCategoryException;
 import ru.practicum.ewm.main.data.constants.Constants;
 import ru.practicum.ewm.main.data.dto.category.CategoryDto;
@@ -14,6 +15,7 @@ import ru.practicum.ewm.main.persistence.repository.EventRepository;
 import ru.practicum.ewm.main.validation.Validation;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class AdminCategoryServiceImpl implements AdminCategoryService {
     private final CategoryMapper categoryMapper;
@@ -24,6 +26,7 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
     @Override
     public CategoryDto add(NewCategoryDto newCategoryDto) {
         Category category = categoryRepository.save(categoryMapper.newCategoryDtoToCategory(newCategoryDto));
+        log.info("Админ добавил категорию с id = {}",category.getId() );
         return categoryMapper.categoryToCategoryDto(category);
     }
 
@@ -31,6 +34,7 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
     public void delete(Long catId) {
         Category category = validation.checkCategoryExist(catId,categoryRepository);
         if (eventRepository.findALLByEventCategory(category).isEmpty()) {
+            log.info("Админ удалил категорию с id = {}",category.getId() );
             categoryRepository.deleteById(catId);
         } else {
             throw new NotEmptyCategoryException(Constants.BUSY_CATEGORY);
@@ -42,6 +46,7 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
         Category category = validation.checkCategoryExist(catId,categoryRepository);
         category.setName(updateCategoryDto.getName());
         categoryRepository.save(category);
+        log.info("Админ обновил категорию с id = {}",category.getId() );
         return categoryMapper.categoryToCategoryDto(category);
     }
 }

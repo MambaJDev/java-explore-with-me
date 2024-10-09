@@ -32,9 +32,8 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
 
     @Override
     public void delete(Long catId) {
-        Category category = validation.checkCategoryExist(catId, categoryRepository);
-        if (eventRepository.findALLByEventCategory(category).isEmpty()) {
-            log.info("Админ удалил категорию с id = {}", category.getId());
+        if (eventRepository.findALLByEventCategoryId(catId).isEmpty()) {
+            log.info("Админ удалил категорию с id = {}", catId);
             categoryRepository.deleteById(catId);
         } else {
             throw new NotEmptyCategoryException(Constants.BUSY_CATEGORY);

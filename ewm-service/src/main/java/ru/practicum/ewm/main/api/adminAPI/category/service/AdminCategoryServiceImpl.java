@@ -33,7 +33,7 @@ public class AdminCategoryServiceImpl implements AdminCategoryService {
     @Override
     public void delete(Long catId) {
         validation.checkCategoryExist(catId, categoryRepository);
-        boolean isBusy = eventRepository.existsByCategoryId(catId);
+        boolean isBusy = eventRepository.existsByEventCategoryId(catId);
         if (isBusy) {
             throw new NotEmptyCategoryException(Constants.BUSY_CATEGORY);
         } else {

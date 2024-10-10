@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.main.data.dto.category.CategoryDto;
 import ru.practicum.ewm.main.data.mapper.category.CategoryMapper;
 import ru.practicum.ewm.main.persistence.model.category.Category;

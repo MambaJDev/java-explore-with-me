@@ -22,7 +22,6 @@ public class PublicCategoryServiceImpl implements PublicCategoryService {
     private final Validation validation;
 
     @Override
-    @Transactional(readOnly = true)
     public List<CategoryDto> getCategories(Integer from, Integer size) {
         Pageable pageable = PageRequest.of(from / size, size);
         return categoryRepository.findAll(pageable).stream()

@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 public class CategoryDto {
-    private String id;
+    private Long id;
     @Size(min = 1, max = 50)
     private String name;
 }

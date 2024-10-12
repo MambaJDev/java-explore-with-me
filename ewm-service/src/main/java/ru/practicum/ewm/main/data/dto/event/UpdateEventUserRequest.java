@@ -21,7 +21,6 @@ public class UpdateEventUserRequest {
     private Long category;
     @Size(min = 20, max = 7000)
     private String description;
-    @FutureOrPresent
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATE_TIME_FORMAT)
     private LocalDateTime eventDate;
     private NewLocationDto location;

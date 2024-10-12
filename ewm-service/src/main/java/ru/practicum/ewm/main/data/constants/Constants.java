@@ -19,4 +19,5 @@ public class Constants {
     public static final String NOT_PUBLISHED_EVENT = "The Event with id=%s was not published";
     public static final String LIMIT_IS_OVER = "The participation limit of Event with id=%s has run out";
     public static final String DUPLICATE_REQUEST = "Request already added";
+    public static final String INVALID_DATE = "Updated data have invalid date";
 }

@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.ewm.main.api.errorAPI.BadRequestException;
 import ru.practicum.ewm.main.api.errorAPI.FullLimitException;
 import ru.practicum.ewm.main.data.constants.Constants;
 import ru.practicum.ewm.main.data.dto.event.EventFullDto;
@@ -85,6 +86,10 @@ public class EventPrivateServiceImpl implements EventPrivateService {
         if (event.getEventDate().isBefore(LocalDateTime.now().plusHours(2)) ||
                 event.getState().equals(EventState.PUBLISHED)) {
             throw new IllegalArgumentException(Constants.INVALID_EVENT);
+        }
+        if (updateForEvent.getEventDate() != null
+                && updateForEvent.getEventDate().isBefore(LocalDateTime.now().plusHours(2))) {
+            throw new BadRequestException(Constants.INVALID_DATE);
         }
         if (updateForEvent.getStateAction() != null) {
             if (updateForEvent.getStateAction().equals(PrivateStateAction.SEND_TO_REVIEW)) {

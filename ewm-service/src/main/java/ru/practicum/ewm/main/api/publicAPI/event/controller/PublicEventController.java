@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.main.api.publicAPI.event.service.EventPublicService;
+import ru.practicum.ewm.main.data.constants.Constants;
+import ru.practicum.ewm.main.data.constants.DefaultValue;
 import ru.practicum.ewm.main.data.dto.event.EventFullDto;
 import ru.practicum.ewm.main.data.dto.event.EventShortDto;
 import ru.practicum.ewm.main.data.enums.Sort;
@@ -36,14 +38,14 @@ public class PublicEventController {
     public List<EventShortDto> getPublicEvents(@RequestParam(required = false) String text,
                                                @RequestParam(required = false) List<Long> categories,
                                                @RequestParam(required = false) Boolean paid,
-                                               @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+                                               @DateTimeFormat(pattern = Constants.DATE_TIME_FORMAT)
                                                @RequestParam(required = false) LocalDateTime rangeStart,
-                                               @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+                                               @DateTimeFormat(pattern = Constants.DATE_TIME_FORMAT)
                                                @RequestParam(required = false) LocalDateTime rangeEnd,
-                                               @RequestParam(defaultValue = "false") Boolean onlyAvailable,
+                                               @RequestParam(defaultValue = DefaultValue.FALSE_VALUE) Boolean onlyAvailable,
                                                @RequestParam(required = false) Sort sort,
-                                               @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
-                                               @RequestParam(defaultValue = "10") @Positive Integer size,
+                                               @RequestParam(defaultValue = DefaultValue.ZERO) @PositiveOrZero Integer from,
+                                               @RequestParam(defaultValue = DefaultValue.SIZE_10) @Positive Integer size,
                                                @NonNull HttpServletRequest request) {
         log.info("public GET-request, getEvents: text={}, categories={}, paid={}, rangeStart={}, rangeEnd={}, " +
                         "onlyAvailable={}, sort={}, from={}, size={}",

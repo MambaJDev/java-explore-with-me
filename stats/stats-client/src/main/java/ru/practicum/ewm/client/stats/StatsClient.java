@@ -17,12 +17,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
+import ru.practicum.ewm.dto.constant.Constants;
 import ru.practicum.ewm.dto.stats.StatRequestDto;
 import ru.practicum.ewm.dto.stats.StatResponseDto;
 
 @Service
 public class StatsClient {
     private final RestTemplate restTemplate;
+    private static final String GET_STATS_URL = "/stats?start={start}&end={end}&uris={uris}&unique={unique}";
 
     public StatsClient(@Value("${stats-server.url}") String statsServerUrl, RestTemplateBuilder builder) {
         restTemplate = builder
@@ -36,7 +38,7 @@ public class StatsClient {
             HttpEntity<StatRequestDto> requestEntity = new HttpEntity<>(statRequestDto, defaultHeaders());
             restTemplate.postForEntity("/hit", requestEntity, HttpStatus.class);
         } catch (RestClientException exception) {
-            throw new IllegalArgumentException("BAD CONNECTION!");
+            throw new IllegalArgumentException(Constants.BAD_CONNECTION);
         }
     }
 
@@ -55,12 +57,9 @@ public class StatsClient {
         );
         ResponseEntity<StatResponseDto[]> responseListDto;
         try {
-            responseListDto = restTemplate.getForEntity(
-                    "/stats?start={start}&end={end}&uris={uris}&unique={unique}",
-                    StatResponseDto[].class,
-                    parameters);
+            responseListDto = restTemplate.getForEntity(GET_STATS_URL, StatResponseDto[].class, parameters);
         } catch (RestClientException exception) {
-            throw new IllegalArgumentException("BAD CONNECTION!");
+            throw new IllegalArgumentException(Constants.BAD_CONNECTION);
         }
         return Arrays.asList(Objects.requireNonNull(responseListDto.getBody()));
     }

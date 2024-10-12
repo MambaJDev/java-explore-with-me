@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import ru.practicum.ewm.dto.constant.Constants;
 import ru.practicum.ewm.dto.stats.StatRequestDto;
 import ru.practicum.ewm.dto.stats.StatResponseDto;
-import ru.practicum.ewm.server.stats.constant.Constants;
 import ru.practicum.ewm.server.stats.error.BadRequestException;
 import ru.practicum.ewm.server.stats.service.StatService;
 
@@ -34,7 +34,7 @@ public class StatController {
     @PostMapping("/hit")
     public void saveStats(@RequestBody @Valid StatRequestDto statRequestDto) {
         if (statRequestDto.getUri() == null) {
-            statRequestDto.setUri("0");
+            statRequestDto.setUri(Constants.ZERO);
         }
         log.info("post запрос на сохранение статистики");
         statService.saveStats(statRequestDto);
@@ -42,11 +42,11 @@ public class StatController {
 
     @GetMapping("/stats")
     public List<StatResponseDto> getStats(@RequestParam @PastOrPresent @NotNull
-                                          @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
+                                          @DateTimeFormat(pattern = Constants.DATE_TIME_FORMAT) LocalDateTime start,
                                           @RequestParam @PastOrPresent @NotNull
-                                          @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
-                                          @RequestParam(required = false, defaultValue = "0") String[] uris,
-                                          @RequestParam(required = false, defaultValue = "false") Boolean unique) {
+                                          @DateTimeFormat(pattern = Constants.DATE_TIME_FORMAT) LocalDateTime end,
+                                          @RequestParam(required = false, defaultValue = Constants.ZERO) String[] uris,
+                                          @RequestParam(required = false, defaultValue = Constants.FALSE_VALUE) Boolean unique) {
         if (end.isBefore(start)) {
             log.error("Время бронирования некорректно");
             throw new BadRequestException(Constants.WRONG_REQUEST_PERIOD);

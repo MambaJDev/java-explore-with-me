@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.main.api.adminAPI.event.service.EventAdminService;
+import ru.practicum.ewm.main.data.constants.Constants;
+import ru.practicum.ewm.main.data.constants.DefaultValue;
 import ru.practicum.ewm.main.data.dto.event.EventFullDto;
 import ru.practicum.ewm.main.data.dto.event.UpdateEventAdminRequest;
 
@@ -33,14 +35,14 @@ public class AdminEventController {
     List<EventFullDto> getEventsByAdmin(@RequestParam(required = false) List<Long> users,
                                         @RequestParam(required = false) List<String> states,
                                         @RequestParam(required = false) List<Long> categories,
-                                        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+                                        @DateTimeFormat(pattern = Constants.DATE_TIME_FORMAT)
                                         @RequestParam(required = false) LocalDateTime rangeStart,
-                                        @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+                                        @DateTimeFormat(pattern = Constants.DATE_TIME_FORMAT)
                                         @RequestParam(required = false) LocalDateTime rangeEnd,
                                         @PositiveOrZero
-                                        @RequestParam(defaultValue = "0") Integer from,
+                                        @RequestParam(defaultValue = DefaultValue.ZERO) Integer from,
                                         @Positive
-                                        @RequestParam(defaultValue = "10") Integer size) {
+                                        @RequestParam(defaultValue = DefaultValue.SIZE_10) Integer size) {
 
         return eventAdminService.getEventsByAdmin(users, states, categories, rangeStart, rangeEnd, from, size);
     }

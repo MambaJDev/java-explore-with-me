@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.main.api.privateAPI.event.service.EventPrivateService;
+import ru.practicum.ewm.main.data.constants.DefaultValue;
 import ru.practicum.ewm.main.data.dto.event.EventFullDto;
 import ru.practicum.ewm.main.data.dto.event.EventRequestStatusUpdateRequest;
 import ru.practicum.ewm.main.data.dto.event.EventRequestStatusUpdateResult;
@@ -36,9 +37,9 @@ public class PrivateEventController {
     @GetMapping
     public List<EventShortDto> getEventsByUser(@PathVariable Long userId,
                                                @PositiveOrZero
-                                               @RequestParam(defaultValue = "0") Integer from,
+                                               @RequestParam(defaultValue = DefaultValue.ZERO) Integer from,
                                                @Positive
-                                               @RequestParam(defaultValue = "10") Integer size) {
+                                               @RequestParam(defaultValue = DefaultValue.SIZE_10) Integer size) {
         return eventPrivateService.getEventsByUser(userId, from, size);
     }
 

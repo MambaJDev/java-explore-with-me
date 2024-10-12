@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.main.api.errorAPI.BadRequestException;
 import ru.practicum.ewm.main.api.errorAPI.FullLimitException;
+import ru.practicum.ewm.main.api.errorAPI.NotFoundException;
 import ru.practicum.ewm.main.data.constants.Constants;
 import ru.practicum.ewm.main.data.dto.participation.ParticipationRequestDto;
 import ru.practicum.ewm.main.data.enums.EventState;
@@ -44,18 +45,9 @@ public class ParticipationPrivateServiceImpl implements ParticipationPrivateServ
         User user = validation.checkUserExist(userId, userRepository);
         Event event = validation.checkEventExist(eventId, eventRepository);
         ParticipationRequest participationRequest = participationRepository.findByRequesterIdAndEventId(userId, eventId);
-        if (participationRequest != null) {
-            throw new IllegalArgumentException(Constants.DUPLICATE_REQUEST);
-        }
-        if (event.getInitiator().equals(user)) {
-            throw new IllegalArgumentException(Constants.WRONG_REQUESTER);
-        }
-        if (!event.getState().equals(EventState.PUBLISHED)) {
-            throw new IllegalArgumentException(Constants.NOT_PUBLISHED_EVENT);
-        }
-        if (event.getParticipantLimit() != 0 && event.getParticipantLimit().equals(event.getConfirmedRequests())) {
-            throw new FullLimitException(String.format(Constants.LIMIT_IS_OVER, eventId));
-        }
+
+        participationRequestExceptionCheck(participationRequest, user, event);
+
         ParticipationRequest newParticipation = new ParticipationRequest()
                 .setRequester(user)
                 .setEvent(event)
@@ -75,7 +67,7 @@ public class ParticipationPrivateServiceImpl implements ParticipationPrivateServ
 
     @Override
     public ParticipationRequestDto cancelParticipationRequest(Long userId, Long requestId) {
-        ParticipationRequest participationRequest = validation.checkParticipationExist(requestId, participationRepository);
+        ParticipationRequest participationRequest = checkParticipationExist(requestId, participationRepository);
         Long eventId = participationRequest.getEvent().getId();
         if (participationRequest.getRequestStatus().equals(RequestStatus.PENDING)) {
             validation.checkEventExist(eventId, eventRepository);
@@ -85,5 +77,25 @@ public class ParticipationPrivateServiceImpl implements ParticipationPrivateServ
             throw new BadRequestException(Constants.NOT_PENDING);
         }
         return participationMapper.toParticipationRequestDto(participationRequest);
+    }
+
+    private ParticipationRequest checkParticipationExist(Long partId, ParticipationRepository participationRepository) {
+        return participationRepository.findById(partId).orElseThrow(() -> new NotFoundException(
+                String.format(Constants.PARTICIPATION_NOT_FOUND, partId)));
+    }
+
+    private void participationRequestExceptionCheck(ParticipationRequest participationRequest, User user, Event event) {
+        if (participationRequest != null) {
+            throw new IllegalArgumentException(Constants.DUPLICATE_REQUEST);
+        }
+        if (event.getInitiator().equals(user)) {
+            throw new IllegalArgumentException(Constants.WRONG_REQUESTER);
+        }
+        if (!event.getState().equals(EventState.PUBLISHED)) {
+            throw new IllegalArgumentException(Constants.NOT_PUBLISHED_EVENT);
+        }
+        if (event.getParticipantLimit() != 0 && event.getParticipantLimit().equals(event.getConfirmedRequests())) {
+            throw new FullLimitException(String.format(Constants.LIMIT_IS_OVER, event.getId()));
+        }
     }
 }

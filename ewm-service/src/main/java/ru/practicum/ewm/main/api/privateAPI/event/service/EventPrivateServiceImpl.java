@@ -125,7 +125,7 @@ public class EventPrivateServiceImpl implements EventPrivateService {
                 .setConfirmedRequests(new ArrayList<>());
         Event event = validation.checkEventExist(eventId, eventRepository);
         List<ParticipationRequest> participationRequestRequestList = participationRepository.findAllById(request.getRequestIds());
-        validation.checkPendingRequestStatus(participationRequestRequestList);
+        checkPendingRequestStatus(participationRequestRequestList);
         if (!event.getRequestModeration() || event.getParticipantLimit() == 0) {
             return result;
         }
@@ -150,15 +150,22 @@ public class EventPrivateServiceImpl implements EventPrivateService {
                             event.setConfirmedRequests(event.getConfirmedRequests() + ONE_REQUEST);
                             eventRepository.save(event);
                             result.getConfirmedRequests().add(participationMapper.toParticipationRequestDto(participation));
-                            return participation;
                         } else {
                             participation.setRequestStatus(RequestStatus.REJECTED);
                             result.getRejectedRequests().add(participationMapper.toParticipationRequestDto(participation));
-                            return participation;
                         }
+                        return participation;
                     }).toList();
             participationRepository.saveAll(participationRequestRequestList);
             return result;
         }
+    }
+
+    private void checkPendingRequestStatus(List<ParticipationRequest> participationRequestRequestList) {
+        participationRequestRequestList.forEach(participation -> {
+            if (!participation.getRequestStatus().equals(RequestStatus.PENDING)) {
+                throw new IllegalArgumentException(Constants.NOT_PENDING);
+            }
+        });
     }
 }

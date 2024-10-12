@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.main.api.adminAPI.user.service.AdminUserService;
+import ru.practicum.ewm.main.data.constants.DefaultValue;
 import ru.practicum.ewm.main.data.dto.user.NewUserRequest;
 import ru.practicum.ewm.main.data.dto.user.UserDto;
 
@@ -28,9 +29,9 @@ public class AdminUserController {
 
     @GetMapping
     public List<UserDto> getUsers(@RequestParam(required = false) List<Long> ids,
-                                  @RequestParam(required = false, defaultValue = "0")
+                                  @RequestParam(required = false, defaultValue = DefaultValue.ZERO)
                                   @PositiveOrZero Integer from,
-                                  @RequestParam(required = false, defaultValue = "10")
+                                  @RequestParam(required = false, defaultValue = DefaultValue.SIZE_10)
                                   @Positive Integer size) {
         return adminUserService.getUsers(ids, from, size);
     }

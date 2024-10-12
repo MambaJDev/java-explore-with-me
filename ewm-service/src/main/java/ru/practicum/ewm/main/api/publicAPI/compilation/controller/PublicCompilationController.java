@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.main.api.publicAPI.compilation.service.PublicCompilationService;
+import ru.practicum.ewm.main.data.constants.DefaultValue;
 import ru.practicum.ewm.main.data.dto.compilation.CompilationDto;
 
 @RestController
@@ -23,8 +24,8 @@ public class PublicCompilationController {
 
     @GetMapping
     public List<CompilationDto> getCompilations(@RequestParam(required = false) Boolean pinned,
-                                                @PositiveOrZero @RequestParam(defaultValue = "0") Integer from,
-                                                @Positive @RequestParam(defaultValue = "10") Integer size) {
+                                                @PositiveOrZero @RequestParam(defaultValue = DefaultValue.ZERO) Integer from,
+                                                @Positive @RequestParam(defaultValue = DefaultValue.SIZE_10) Integer size) {
         return publicCompilationService.getCompilations(pinned, from, size);
     }
 

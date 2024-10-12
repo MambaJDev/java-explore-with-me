@@ -4,7 +4,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ru.practicum.ewm.main.data.dto.user.NewUserRequest;
 import ru.practicum.ewm.main.data.dto.user.UserDto;
-import ru.practicum.ewm.main.data.dto.user.UserShortDto;
 import ru.practicum.ewm.main.persistence.model.user.User;
 
 
@@ -15,6 +14,4 @@ public interface UserMapper {
     User newUserRequestToUser(NewUserRequest newUserRequest);
 
     UserDto userToUserDto(User user);
-
-    UserShortDto userToUserShortDto(User user);
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.main.api.publicAPI.category.service.PublicCategoryService;
+import ru.practicum.ewm.main.data.constants.DefaultValue;
 import ru.practicum.ewm.main.data.dto.category.CategoryDto;
 
 @RestController
@@ -23,9 +24,9 @@ public class PublicCategoryController {
 
     @GetMapping
     public List<CategoryDto> getCategories(@PositiveOrZero
-                                           @RequestParam(defaultValue = "0") Integer from,
+                                           @RequestParam(defaultValue = DefaultValue.ZERO) Integer from,
                                            @Positive
-                                           @RequestParam(defaultValue = "10") Integer size) {
+                                           @RequestParam(defaultValue = DefaultValue.SIZE_10) Integer size) {
         return publicCategoryService.getCategories(from, size);
     }
 

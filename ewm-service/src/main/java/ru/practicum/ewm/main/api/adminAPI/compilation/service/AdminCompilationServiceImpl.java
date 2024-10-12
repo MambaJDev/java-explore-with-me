@@ -3,6 +3,8 @@ package ru.practicum.ewm.main.api.adminAPI.compilation.service;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ru.practicum.ewm.main.api.errorAPI.NotFoundException;
+import ru.practicum.ewm.main.data.constants.Constants;
 import ru.practicum.ewm.main.data.dto.compilation.CompilationDto;
 import ru.practicum.ewm.main.data.dto.compilation.NewCompilationDto;
 import ru.practicum.ewm.main.data.dto.compilation.UpdateCompilationRequest;
@@ -11,7 +13,6 @@ import ru.practicum.ewm.main.persistence.model.compilation.Compilation;
 import ru.practicum.ewm.main.persistence.model.event.Event;
 import ru.practicum.ewm.main.persistence.repository.CompilationRepository;
 import ru.practicum.ewm.main.persistence.repository.EventRepository;
-import ru.practicum.ewm.main.validation.Validation;
 
 @Service
 @RequiredArgsConstructor
@@ -19,7 +20,6 @@ public class AdminCompilationServiceImpl implements AdminCompilationService {
     private final CompilationRepository compilationRepository;
     private final EventRepository eventRepository;
     private final CompilationMapper compilationMapper;
-    private final Validation validation;
 
     @Override
     public CompilationDto addCompilation(NewCompilationDto newCompilationDto) {
@@ -34,13 +34,13 @@ public class AdminCompilationServiceImpl implements AdminCompilationService {
 
     @Override
     public void deleteCompilationById(Long compId) {
-        validation.checkCompilationExist(compId, compilationRepository);
+        checkCompilationExist(compId, compilationRepository);
         compilationRepository.deleteById(compId);
     }
 
     @Override
     public CompilationDto updateCompilationById(Long compId, UpdateCompilationRequest compilationRequest) {
-        Compilation compilation = validation.checkCompilationExist(compId, compilationRepository);
+        Compilation compilation = checkCompilationExist(compId, compilationRepository);
         if (compilationRequest.getEvents() != null) {
             List<Event> events = eventRepository.findAllById(compilationRequest.getEvents());
             compilation.setEvents(events);
@@ -48,5 +48,10 @@ public class AdminCompilationServiceImpl implements AdminCompilationService {
         compilationMapper.update(compilation, compilationRequest);
         compilationRepository.save(compilation);
         return compilationMapper.toCompilationDto(compilation);
+    }
+
+    private Compilation checkCompilationExist(Long compId, CompilationRepository compilationRepository) {
+        return compilationRepository.findById(compId).orElseThrow(() -> new NotFoundException(
+                String.format(Constants.COMPILATION_NOT_FOUND, compId)));
     }
 }

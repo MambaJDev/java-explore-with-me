@@ -2,6 +2,7 @@ package ru.practicum.ewm.main.api.publicAPI.event.service;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -10,7 +11,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.ewm.main.api.errorAPI.BadRequestException;
 import ru.practicum.ewm.main.api.errorAPI.NotFoundException;
+import ru.practicum.ewm.main.api.errorAPI.WrongEnumException;
 import ru.practicum.ewm.main.data.constants.Constants;
 import ru.practicum.ewm.main.data.dto.event.EventFullDto;
 import ru.practicum.ewm.main.data.dto.event.EventShortDto;
@@ -42,7 +45,7 @@ public class EventPublicServiceImpl implements EventPublicService {
                                                Integer from,
                                                Integer size,
                                                HttpServletRequest servletRequest) {
-        validation.validateDates(rangeStart, rangeEnd);
+        validateDates(rangeStart, rangeEnd);
         statManager.sendHitEventData(servletRequest);
         LocalDateTime start = rangeStart != null ? rangeStart : LocalDateTime.now();
         LocalDateTime end = rangeEnd != null ? rangeEnd : LocalDateTime.now().plusYears(10);
@@ -57,7 +60,7 @@ public class EventPublicServiceImpl implements EventPublicService {
                     .toList();
         }
         if (sort != null) {
-            validation.validateEnums(sort);
+            validateEnums(sort);
             if (sort.equals(Sort.EVENT_DATE)) {
                 events.sort(Comparator.comparing(Event::getEventDate));
             } else {
@@ -80,5 +83,17 @@ public class EventPublicServiceImpl implements EventPublicService {
         Long views = statManager.getUniqueEventViews(servletRequest, event);
         event.setViews(views);
         return eventMapper.toEventFullDto(event);
+    }
+
+    private void validateDates(LocalDateTime start, LocalDateTime end) {
+        if (start != null && end != null && end.isBefore(start)) {
+            throw new BadRequestException(Constants.END_BEFORE_START);
+        }
+    }
+
+    public void validateEnums(Sort sort) {
+        if (!Arrays.asList(Sort.values()).contains(sort)) {
+            throw new WrongEnumException(Constants.INVALID_SORT);
+        }
     }
 }

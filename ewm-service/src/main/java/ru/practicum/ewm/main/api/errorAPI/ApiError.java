@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.springframework.http.HttpStatus;
+import ru.practicum.ewm.main.data.constants.Constants;
 
 
 @Getter
@@ -15,6 +16,6 @@ public class ApiError {
     private HttpStatus status;
     private String reason;
     private String message;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATE_TIME_FORMAT)
     private LocalDateTime timestamp;
 }

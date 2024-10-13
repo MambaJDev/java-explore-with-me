@@ -8,7 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import ru.practicum.ewm.server.stats.constant.Constants;
+import ru.practicum.ewm.dto.constant.Constants;
 
 @RestControllerAdvice
 @Slf4j

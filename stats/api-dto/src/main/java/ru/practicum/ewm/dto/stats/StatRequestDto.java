@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import ru.practicum.ewm.dto.constant.Constants;
 
 @Getter
 @Setter
@@ -16,8 +17,7 @@ public class StatRequestDto {
     @NonNull
     private String ip;
     @NonNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.DATE_TIME_FORMAT)
     private LocalDateTime timestamp;
-    @NonNull
     private String uri;
 }

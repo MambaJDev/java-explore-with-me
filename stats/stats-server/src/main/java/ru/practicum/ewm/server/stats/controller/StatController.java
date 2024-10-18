@@ -23,6 +23,7 @@ import ru.practicum.ewm.dto.stats.StatResponseDto;
 import ru.practicum.ewm.server.stats.error.BadRequestException;
 import ru.practicum.ewm.server.stats.service.StatService;
 
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j

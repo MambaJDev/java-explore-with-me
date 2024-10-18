@@ -20,4 +20,7 @@ public class Constants {
     public static final String LIMIT_IS_OVER = "The participation limit of Event with id=%s has run out";
     public static final String DUPLICATE_REQUEST = "Request already added";
     public static final String INVALID_DATE = "Updated data have invalid date";
+    public static final String COMMENT_NOT_FOUND = "Comment with id=%s was not found";
+    public static final String REQUESTER_NOT_COMMENTATOR = "Requester with id=%s is not the commentator";
+    public static final String NOT_PENDING_COMMENT = "Comment must have status PENDING";
 }

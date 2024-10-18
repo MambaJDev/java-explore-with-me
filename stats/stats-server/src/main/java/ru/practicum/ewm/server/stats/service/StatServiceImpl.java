@@ -11,6 +11,7 @@ import ru.practicum.ewm.server.stats.model.EndpointHit;
 import ru.practicum.ewm.server.stats.model.StatDataView;
 import ru.practicum.ewm.server.stats.repository.StatRepository;
 
+
 @Service
 @RequiredArgsConstructor
 public class StatServiceImpl implements StatService {

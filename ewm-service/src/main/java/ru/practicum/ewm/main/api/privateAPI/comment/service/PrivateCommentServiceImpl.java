@@ -11,6 +11,7 @@ import ru.practicum.ewm.main.data.dto.comment.NewCommentDto;
 import ru.practicum.ewm.main.data.dto.comment.UpdateCommentUserDto;
 import ru.practicum.ewm.main.data.enums.ComStatus;
 import ru.practicum.ewm.main.data.enums.ComType;
+import ru.practicum.ewm.main.data.enums.EventState;
 import ru.practicum.ewm.main.data.mapper.comment.CommentMapper;
 import ru.practicum.ewm.main.persistence.model.comment.Comment;
 import ru.practicum.ewm.main.persistence.model.event.Event;
@@ -34,6 +35,9 @@ public class PrivateCommentServiceImpl implements PrivateCommentService {
 
         User commentator = validation.checkUserExist(userId, userRepository);
         Event event = validation.checkEventExist(eventId, eventRepository);
+        if (!event.getState().equals(EventState.PUBLISHED)) {
+            throw new BadRequestException(String.format(Constants.NOT_PUBLISHED_EVENT, eventId));
+        }
         Comment comment = commentMapper.toComment(
                 commentDto,
                 commentator,

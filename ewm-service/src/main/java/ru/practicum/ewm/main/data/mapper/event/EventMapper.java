@@ -66,6 +66,6 @@ public interface EventMapper {
     @Mapping(target = "state", ignore = true)
     void updateEventByPrivate(@MappingTarget Event event, UpdateEventUserRequest updateEventUserRequest);
 
-    @Mapping(target = "category", source = "event.eventCategory")
+    @Mapping(target = "category", source = "eventCategory")
     EventShortDto toEventShortDto(Event event);
 }

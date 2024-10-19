@@ -262,7 +262,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/:userId/comments?eventId=1",
+							"raw": "{{baseUrl}}/users/:userId/comments?eventId={{eid}}",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -274,13 +274,13 @@
 							"query": [
 								{
 									"key": "eventId",
-									"value": "1"
+									"value": "{{eid}}"
 								}
 							],
 							"variable": [
 								{
 									"key": "userId",
-									"value": "1",
+									"value": "{{uid}}",
 									"description": "(Required) id текущего пользователя"
 								}
 							]

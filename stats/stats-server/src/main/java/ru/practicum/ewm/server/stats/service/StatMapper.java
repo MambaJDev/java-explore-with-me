@@ -7,6 +7,7 @@ import ru.practicum.ewm.dto.stats.StatResponseDto;
 import ru.practicum.ewm.server.stats.model.EndpointHit;
 import ru.practicum.ewm.server.stats.model.StatDataView;
 
+
 @Mapper(componentModel = "spring")
 public interface StatMapper {
 

@@ -71,7 +71,6 @@ commentator_id BIGINT NOT NULL,
 event_id BIGINT NOT NULL,
 created  TIMESTAMP WITHOUT TIME ZONE,
 status VARCHAR NOT NULL,
-type VARCHAR NOT NULL,
 mark INT NOT NULL,
 CONSTRAINT comments_to_users FOREIGN KEY (commentator_id) REFERENCES users(id) ON DELETE CASCADE,
 CONSTRAINT comments_to_events FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE

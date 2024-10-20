@@ -16,7 +16,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import ru.practicum.ewm.main.data.enums.ComStatus;
-import ru.practicum.ewm.main.data.enums.ComType;
 import ru.practicum.ewm.main.persistence.model.event.Event;
 import ru.practicum.ewm.main.persistence.model.user.User;
 
@@ -40,9 +39,6 @@ public class Comment {
     @NotNull
     @Enumerated(EnumType.STRING)
     private ComStatus status;
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private ComType type;
     @NotNull
     private Integer mark;
     @NotNull

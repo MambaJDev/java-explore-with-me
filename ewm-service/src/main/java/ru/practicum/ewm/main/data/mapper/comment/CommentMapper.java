@@ -12,7 +12,6 @@ import ru.practicum.ewm.main.data.dto.comment.CommentShortDto;
 import ru.practicum.ewm.main.data.dto.comment.NewCommentDto;
 import ru.practicum.ewm.main.data.dto.comment.UpdateCommentUserDto;
 import ru.practicum.ewm.main.data.enums.ComStatus;
-import ru.practicum.ewm.main.data.enums.ComType;
 import ru.practicum.ewm.main.persistence.model.comment.Comment;
 import ru.practicum.ewm.main.persistence.model.event.Event;
 import ru.practicum.ewm.main.persistence.model.user.User;
@@ -25,7 +24,6 @@ public interface CommentMapper {
                       User commentator,
                       Event event,
                       ComStatus status,
-                      ComType type,
                       LocalDateTime created);
 
 

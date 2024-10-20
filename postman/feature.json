@@ -92,7 +92,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{baseUrl}}/users/:userId/comments?eventId=1",
+							"raw": "{{baseUrl}}/users/:userId/comments?eventId={{eid}}",
 							"host": [
 								"{{baseUrl}}"
 							],
@@ -104,7 +104,7 @@
 							"query": [
 								{
 									"key": "eventId",
-									"value": "1"
+									"value": "{{eid}}"
 								}
 							],
 							"variable": [
@@ -208,13 +208,12 @@
 									"const source = JSON.parse(pm.request.body.raw);\r",
 									"const target = pm.response.json();\r",
 									"\r",
-									"pm.test(\"Ответ должен содержать поля: id, event, author, created, status, text\", function () {\r",
+									"pm.test(\"Ответ должен содержать поля: id, event, commentator, created, status, text\", function () {\r",
 									"pm.expect(target).to.have.property('id');\r",
 									"pm.expect(target).to.have.property('text');\r",
 									"pm.expect(target).to.have.property('event');\r",
 									"pm.expect(target).to.have.property('commentator');\r",
 									"pm.expect(target).to.have.property('status');\r",
-									"pm.expect(target).to.have.property('type');\r",
 									"pm.expect(target).to.have.property('mark');\r",
 									"pm.expect(target).to.have.property('created');\r",
 									"});\r",
@@ -313,13 +312,12 @@
 									"\r",
 									"const target = pm.response.json();\r",
 									"\r",
-									"pm.test(\"Ответ должен содержать поля: id, event, author, created, status, text\", function () {\r",
+									"pm.test(\"Ответ должен содержать поля: id, event, commentator, created, status, text\", function () {\r",
 									"pm.expect(target).to.have.property('id');\r",
 									"pm.expect(target).to.have.property('text');\r",
 									"pm.expect(target).to.have.property('event');\r",
 									"pm.expect(target).to.have.property('commentator');\r",
 									"pm.expect(target).to.have.property('status');\r",
-									"pm.expect(target).to.have.property('type');\r",
 									"pm.expect(target).to.have.property('mark');\r",
 									"pm.expect(target).to.have.property('created');\r",
 									"});\r",
@@ -384,13 +382,12 @@
 									"const source = JSON.parse(pm.request.body.raw);\r",
 									"const target = pm.response.json();\r",
 									"\r",
-									"pm.test(\"Ответ должен содержать поля: id, event, commentator, created, type, mark, status, text\", function () {\r",
+									"pm.test(\"Ответ должен содержать поля: id, event, commentator, created, mark, status, text\", function () {\r",
 									"pm.expect(target).to.have.property('id');\r",
 									"pm.expect(target).to.have.property('text');\r",
 									"pm.expect(target).to.have.property('event');\r",
 									"pm.expect(target).to.have.property('commentator');\r",
 									"pm.expect(target).to.have.property('status');\r",
-									"pm.expect(target).to.have.property('type');\r",
 									"pm.expect(target).to.have.property('mark');\r",
 									"pm.expect(target).to.have.property('created');\r",
 									"});\r",
@@ -467,13 +464,12 @@
 									"\r",
 									"const target = pm.response.json();\r",
 									"\r",
-									"pm.test(\"Ответ должен содержать поля: id, event, commentator, type, mark, created, status, text\", function () {\r",
+									"pm.test(\"Ответ должен содержать поля: id, event, commentator, mark, created, status, text\", function () {\r",
 									"pm.expect(target).to.have.property('id');\r",
 									"pm.expect(target).to.have.property('text');\r",
 									"pm.expect(target).to.have.property('event');\r",
 									"pm.expect(target).to.have.property('commentator');\r",
 									"pm.expect(target).to.have.property('status');\r",
-									"pm.expect(target).to.have.property('type');\r",
 									"pm.expect(target).to.have.property('mark');\r",
 									"pm.expect(target).to.have.property('created');\r",
 									"});"

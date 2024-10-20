@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.practicum.ewm.main.api.adminAPI.comment.service.AdminCommentService;
 import ru.practicum.ewm.main.data.dto.comment.CommentFullDto;
@@ -31,8 +30,7 @@ public class AdminCommentController {
     }
 
     @PatchMapping
-    public CommentFullDto updateCommentStatus(@PathVariable @NotNull Long comId,
-                                              @RequestParam String status) {
-        return adminCommentService.updateCommentStatus(comId, status);
+    public CommentFullDto updateCommentStatus(@PathVariable @NotNull Long comId) {
+        return adminCommentService.updateCommentStatus(comId);
     }
 }

@@ -8,5 +8,5 @@ public interface AdminCommentService {
 
     void deleteCommentById(Long comId);
 
-    CommentFullDto updateCommentStatus(Long comId, String comStatus);
+    CommentFullDto updateCommentStatus(Long comId);
 }

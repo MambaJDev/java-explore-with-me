@@ -10,7 +10,6 @@ import ru.practicum.ewm.main.data.dto.comment.CommentFullDto;
 import ru.practicum.ewm.main.data.dto.comment.NewCommentDto;
 import ru.practicum.ewm.main.data.dto.comment.UpdateCommentUserDto;
 import ru.practicum.ewm.main.data.enums.ComStatus;
-import ru.practicum.ewm.main.data.enums.ComType;
 import ru.practicum.ewm.main.data.enums.EventState;
 import ru.practicum.ewm.main.data.mapper.comment.CommentMapper;
 import ru.practicum.ewm.main.persistence.model.comment.Comment;
@@ -43,7 +42,6 @@ public class PrivateCommentServiceImpl implements PrivateCommentService {
                 commentator,
                 event,
                 ComStatus.PENDING,
-                ComType.PENDING,
                 LocalDateTime.now().withNano(0)
         );
         commentRepository.save(comment);

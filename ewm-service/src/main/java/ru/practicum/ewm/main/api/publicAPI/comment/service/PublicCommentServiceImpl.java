@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.ewm.main.data.dto.comment.CommentShortDto;
 import ru.practicum.ewm.main.data.enums.ComSort;
 import ru.practicum.ewm.main.data.enums.ComStatus;
-import ru.practicum.ewm.main.data.enums.ComType;
 import ru.practicum.ewm.main.data.mapper.comment.CommentMapper;
 import ru.practicum.ewm.main.persistence.model.comment.Comment;
 import ru.practicum.ewm.main.persistence.repository.CommentRepository;
@@ -31,7 +30,7 @@ public class PublicCommentServiceImpl implements PublicCommentService {
     public List<CommentShortDto> getCommentsByEventId(Long eventId, String sort, Integer from, Integer size) {
         Pageable pageable = PageRequest.of(from / size, size);
         validation.checkEventExist(eventId, eventRepository);
-        List<Comment> comments = commentRepository.findByEventIdAndStatusOrderByCreatedDesc(eventId, ComStatus.PUBLISHED, pageable);
+        List<Comment> comments = commentRepository.findByEventIdOrderByCreatedDesc(eventId, pageable);
         if (comments.isEmpty()) {
             return Collections.emptyList();
         }
@@ -43,12 +42,12 @@ public class PublicCommentServiceImpl implements PublicCommentService {
         }
         if (comSort.equals(ComSort.NEGATIVE)) {
             comments = comments.stream()
-                    .filter(comment -> comment.getType().equals(ComType.NEGATIVE))
+                    .filter(comment -> comment.getStatus().equals(ComStatus.PUBLISHED_NEGATIVE))
                     .toList();
         }
         if (comSort.equals(ComSort.POSITIVE)) {
             comments = comments.stream()
-                    .filter(comment -> comment.getType().equals(ComType.POSITIVE))
+                    .filter(comment -> comment.getStatus().equals(ComStatus.PUBLISHED_POSITIVE))
                     .toList();
         }
         return comments.stream()
